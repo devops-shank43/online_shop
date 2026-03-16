@@ -7,8 +7,18 @@ files:
     overwrite: true
 
 permissions:
+  - object: scripts/stop_container.sh
+    pattern: "*"
+    owner: root
+    group: root
+    mode: 755
+  - object: scripts/start_container.sh
+    pattern: "*"
+    owner: root
+    group: root
+    mode: 755
   - object: docker_installation.sh
-    pattern: "**"
+    pattern: "*"
     owner: root
     group: root
     mode: 755
@@ -23,8 +33,12 @@ hooks:
     - location: scripts/stop_container.sh
       timeout: 300
       runas: root
+      env:
+        PATH: /usr/bin:/usr/local/bin:$PATH
 
   ApplicationStart:
     - location: scripts/start_container.sh
       timeout: 300
       runas: root
+      env:
+        PATH: /usr/bin:/usr/local/bin:$PATH
